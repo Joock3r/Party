@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>נועה ועפרי – קיר מזכרות</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Heebo:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --cream:   #faf6f0;
+      --parchment: #f3ece1;
+      --blush:   #e8c9b8;
+      --rose:    #c9836a;
+      --gold:    #b8924a;
+      --gold-lt: #d4aa6a;
+      --mocha:   #6b4c3b;
+      --ink:     #2e1f14;
+      --white:   #ffffff;
+
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans:  'Heebo', sans-serif;
+
+      --radius: 16px;
+      --shadow: 0 4px 32px rgba(107,76,59,.10);
+      --shadow-lg: 0 12px 48px rgba(107,76,59,.16);
+    }
+
+    /* ─── RESET ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--cream);
+      color: var(--ink);
+      direction: rtl;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── BACKGROUND TEXTURE ─────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(232,201,184,.35) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(184,146,74,.15) 0%, transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    main { position: relative; z-index: 1; }
+
+    /* ─── FLORAL DIVIDER SVG ─────────────────────────────── */
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 0 auto 40px;
+      color: var(--gold);
+      opacity: .75;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      max-width: 120px;
+      height: 1px;
+      background: linear-gradient(to var(--end, left), var(--gold), transparent);
+    }
+    .divider::before { --end: right; }
+
+    /* ─── HERO / HEADER ──────────────────────────────────── */
+    .hero {
+      text-align: center;
+      padding: 80px 24px 64px;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--sans);
+      font-size: .8rem;
+      font-weight: 500;
+      letter-spacing: .2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp .8s .2s ease forwards;
+    }
+
+    .hero-names {
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 11vw, 7rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--mocha);
+      letter-spacing: .02em;
+      opacity: 0;
+      animation: fadeUp .9s .35s ease forwards;
+    }
+    .hero-names em {
+      font-style: italic;
+      color: var(--rose);
+    }
+    .hero-ampersand {
+      display: block;
+      font-size: clamp(2rem, 6vw, 4rem);
+      color: var(--gold);
+      margin: 4px 0;
+    }
+
+    .hero-date {
+      font-family: var(--serif);
+      font-size: clamp(1rem, 3vw, 1.4rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--rose);
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeUp .8s .5s ease forwards;
+    }
+
+    .hero-tagline {
+      font-family: var(--sans);
+      font-size: .95rem;
+      font-weight: 300;
+      color: var(--mocha);
+      opacity: .7;
+      margin-top: 10px;
+      opacity: 0;
+      animation: fadeUp .8s .65s ease forwards;
+    }
+
+    /* petal decorations */
+    .petals {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .petal {
+      position: absolute;
+      width: 8px; height: 12px;
+      background: radial-gradient(ellipse, var(--blush) 0%, transparent 80%);
+      border-radius: 50% 50% 50% 0;
+      opacity: 0;
+      animation: fall linear infinite;
+    }
+    .petal:nth-child(1)  { left: 10%; animation-duration: 9s;  animation-delay: 0s;   width:6px; height:9px; }
+    .petal:nth-child(2)  { left: 22%; animation-duration: 11s; animation-delay: 2s; }
+    .petal:nth-child(3)  { left: 38%; animation-duration: 8s;  animation-delay: 1s;   width:5px; height:8px; }
+    .petal:nth-child(4)  { left: 55%; animation-duration: 13s; animation-delay: 3s; }
+    .petal:nth-child(5)  { left: 70%; animation-duration: 10s; animation-delay: .5s; }
+    .petal:nth-child(6)  { left: 83%; animation-duration: 7s;  animation-delay: 4s;   width:7px; height:11px; }
+    .petal:nth-child(7)  { left: 93%; animation-duration: 12s; animation-delay: 1.5s; }
+
+    @keyframes fall {
+      0%   { transform: translateY(-40px) rotate(0deg);   opacity: .7; }
+      100% { transform: translateY(400px) rotate(360deg); opacity: 0; }
+    }
+
+    /* ─── SECTION TITLES ─────────────────────────────────── */
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 400;
+      color: var(--mocha);
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .section-sub {
+      font-family: var(--sans);
+      font-size: .88rem;
+      font-weight: 300;
+      color: var(--rose);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    /* ─── FORM SECTION ───────────────────────────────────── */
+    .form-section {
+      max-width: 620px;
+      margin: 0 auto 72px;
+      padding: 0 20px;
+    }
+
+    .form-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      padding: 40px 36px;
+      border-top: 3px solid var(--gold-lt);
+      position: relative;
+      overflow: hidden;
+    }
+    .form-card::before {
+      content: '♡';
+      position: absolute;
+      top: -8px; left: 24px;
+      font-size: 1.8rem;
+      color: var(--gold-lt);
+      line-height: 1;
+    }
+
+    .field-group {
+      margin-bottom: 22px;
+    }
+    label {
+      display: block;
+      font-size: .82rem;
+      font-weight: 500;
+      color: var(--mocha);
+      margin-bottom: 7px;
+      letter-spacing: .03em;
+    }
+    .required { color: var(--rose); margin-right: 2px; }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      font-family: var(--sans);
+      font-size: .95rem;
+      font-weight: 300;
+      color: var(--ink);
+      background: var(--cream);
+      border: 1.5px solid #e0d5c8;
+      border-radius: 10px;
+      padding: 12px 16px;
+      direction: rtl;
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+      resize: vertical;
+    }
+    input[type="text"]:focus,
+    textarea:focus {
+      border-color: var(--gold-lt);
+      box-shadow: 0 0 0 3px rgba(184,146,74,.12);
+      background: var(--white);
+    }
+    textarea { min-height: 130px; }
+    input::placeholder, textarea::placeholder { color: #b8a898; }
+
+    /* upload area */
+    .upload-area {
+      border: 2px dashed #d4c4b4;
+      border-radius: 10px;
+      padding: 26px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+      position: relative;
+      background: var(--cream);
+    }
+    .upload-area:hover, .upload-area.dragover {
+      border-color: var(--gold);
+      background: #fdf8f2;
+    }
+    .upload-area input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+    .upload-icon { font-size: 2rem; display: block; margin-bottom: 8px; }
+    .upload-text {
+      font-size: .85rem;
+      color: var(--mocha);
+      font-weight: 400;
+    }
+    .upload-hint {
+      font-size: .75rem;
+      color: #a09080;
+      margin-top: 4px;
+    }
+    .upload-preview {
+      margin-top: 12px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background: var(--parchment);
+      border-radius: 8px;
+      padding: 10px 14px;
+    }
+    .upload-preview.show { display: flex; }
+    .upload-preview img {
+      width: 50px; height: 50px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+    .upload-preview-name {
+      font-size: .82rem;
+      color: var(--mocha);
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .remove-file {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--rose);
+      font-size: 1.1rem;
+      padding: 0 4px;
+    }
+
+    /* submit button */
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--rose) 100%);
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: .05em;
+      border: none;
+      border-radius: 50px;
+      padding: 15px 32px;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: opacity .2s, transform .15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-submit:hover   { opacity: .92; transform: translateY(-1px); }
+    .btn-submit:active  { transform: translateY(0); }
+    .btn-submit:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+    .btn-submit .spinner {
+      display: inline-block;
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* success toast */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--mocha);
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: .9rem;
+      font-weight: 400;
+      border-radius: 50px;
+      padding: 12px 28px;
+      box-shadow: var(--shadow-lg);
+      z-index: 999;
+      transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+      white-space: nowrap;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ─── MEMORY WALL ────────────────────────────────────── */
+    .wall-section {
+      max-width: 1100px;
+      margin: 0 auto 80px;
+      padding: 0 20px;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      max-width: 400px;
+      margin: 0 auto 36px;
+      background: var(--white);
+      border: 1.5px solid #e0d5c8;
+      border-radius: 50px;
+      padding: 10px 18px;
+      box-shadow: var(--shadow);
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .search-bar:focus-within {
+      border-color: var(--gold-lt);
+      box-shadow: 0 0 0 3px rgba(184,146,74,.12);
+    }
+    .search-icon { color: var(--gold); font-size: 1rem; flex-shrink: 0; }
+    .search-bar input {
+      border: none;
+      background: none;
+      font-family: var(--sans);
+      font-size: .9rem;
+      color: var(--ink);
+      direction: rtl;
+      outline: none;
+      flex: 1;
+    }
+    .search-bar input::placeholder { color: #b8a898; }
+
+    .wall-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    /* card */
+    .blessing-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: cardIn .5s ease forwards;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .blessing-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    @keyframes cardIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-media {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+    }
+    .card-media-video {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-body {
+      padding: 20px 20px 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-quote {
+      font-family: var(--serif);
+      font-size: 1.08rem;
+      font-weight: 400;
+      line-height: 1.65;
+      color: var(--ink);
+      flex: 1;
+      position: relative;
+      padding-right: 18px;
+    }
+    .card-quote::before {
+      content: '"';
+      position: absolute;
+      right: 0; top: -4px;
+      font-size: 2.2rem;
+      color: var(--gold-lt);
+      line-height: 1;
+      font-family: var(--serif);
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid #f0e8de;
+    }
+    .card-name {
+      font-family: var(--sans);
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--rose);
+      letter-spacing: .02em;
+    }
+    .card-heart { color: var(--gold-lt); font-size: .85rem; }
+
+    /* empty state */
+    .empty-state {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--mocha);
+      opacity: .5;
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-style: italic;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 32px 24px 48px;
+      font-size: .78rem;
+      color: #a89888;
+      font-weight: 300;
+      position: relative;
+    }
+    footer span {
+      color: var(--rose);
+    }
+
+    /* ─── KEYFRAMES ──────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 480px) {
+      .form-card { padding: 28px 20px; }
+      .wall-grid { grid-template-columns: 1fr; }
+      .hero { padding: 60px 20px 48px; }
+    }
+
+    /* ─── STAGGER DELAYS FOR WALL ────────────────────────── */
+    .blessing-card:nth-child(1) { animation-delay: .05s; }
+    .blessing-card:nth-child(2) { animation-delay: .12s; }
+    .blessing-card:nth-child(3) { animation-delay: .19s; }
+    .blessing-card:nth-child(4) { animation-delay: .26s; }
+    .blessing-card:nth-child(5) { animation-delay: .33s; }
+    .blessing-card:nth-child(6) { animation-delay: .40s; }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════ HERO ════════════════════════════ -->
+<main>
+  <section class="hero">
+    <div class="petals" aria-hidden="true">
+      <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+      <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+      <div class="petal"></div>
+    </div>
+
+    <p class="hero-eyebrow">יום חתונתם של</p>
+
+    <h1 class="hero-names">
+      <em>נועה</em>
+      <span class="hero-ampersand">&amp;</span>
+      <em>עפרי</em>
+    </h1>
+
+    <p class="hero-date">כ״ג בסיוון תשפ״ה &nbsp;·&nbsp; <!--date placeholder--> יוני 2025</p>
+    <p class="hero-tagline">שתפו איתנו רגע, ברכה, ותמונה מהיום המיוחד</p>
+  </section>
+
+  <!-- ════════════════ FORM ════════════════════════════════ -->
+  <section class="form-section" aria-label="טופס ברכה">
+    <h2 class="section-title">שלחו לנו ברכה</h2>
+    <p class="section-sub">כל מילה שלכם תישמר לנו לעד</p>
+    <div class="divider" aria-hidden="true">✦</div>
+
+    <div class="form-card">
+      <form id="blessingForm" novalidate>
+
+        <!-- Name -->
+        <div class="field-group">
+          <label for="guestName">שם <span class="required">*</span></label>
+          <input
+            type="text"
+            id="guestName"
+            name="name"
+            placeholder="מה שמכם?"
+            maxlength="80"
+            required
+          />
+        </div>
+
+        <!-- Blessing -->
+        <div class="field-group">
+          <label for="blessingText">הברכה שלכם <span class="required">*</span></label>
+          <textarea
+            id="blessingText"
+            name="blessing"
+            placeholder="כתבו לנו מה בלבכם… ✨"
+            maxlength="1000"
+            required
+          ></textarea>
+        </div>
+
+        <!-- File Upload -->
+        <div class="field-group">
+          <label>תמונה או סרטון קצר <span style="color:#a09080;font-weight:300;">(אופציונלי)</span></label>
+          <div class="upload-area" id="uploadArea">
+            <input
+              type="file"
+              id="fileInput"
+              name="file"
+              accept="image/*,video/*"
+            />
+            <span class="upload-icon">📎</span>
+            <div class="upload-text">לחצו להעלאה או גררו לכאן</div>
+            <div class="upload-hint">תמונות: JPG, PNG, HEIC &nbsp;|&nbsp; וידאו: MP4, MOV &nbsp;·&nbsp; עד 50MB</div>
+          </div>
+          <div class="upload-preview" id="uploadPreview">
+            <img id="previewImg" src="" alt="תצוגה מקדימה" style="display:none;" />
+            <span class="upload-preview-name" id="previewName"></span>
+            <button type="button" class="remove-file" id="removeFile" aria-label="הסר קובץ">✕</button>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn-submit" id="submitBtn">
+          שלחו ברכה &#8594;
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ════════════════ MEMORY WALL ═════════════════════════ -->
+  <section class="wall-section" aria-label="קיר מזכרות">
+    <h2 class="section-title">קיר המזכרות</h2>
+    <p class="section-sub">כל הברכות שאספנו ביחד</p>
+    <div class="divider" aria-hidden="true">✦</div>
+
+    <div class="search-bar" role="search">
+      <span class="search-icon">🔍</span>
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="חיפוש לפי שם…"
+        aria-label="חיפוש ברכות לפי שם"
+      />
+    </div>
+
+    <div class="wall-grid" id="wallGrid" role="list" aria-live="polite">
+      <!-- Cards injected by JS -->
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>נועה <span>♡</span> עפרי &nbsp;·&nbsp; תמיד ולנצח</p>
+  <p style="margin-top:6px;">עם אהבה, לכל האורחים היקרים</p>
+</footer>
+
+<!-- Toast notification -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+
+<!-- ════════════════ JAVASCRIPT ══════════════════════════ -->
+<script>
+  /* ─────────────────────────────────────────────────────────
+     CONFIGURATION
+     Replace APPS_SCRIPT_URL with your deployed Google Apps
+     Script Web App URL once set up (see setup guide below).
+  ─────────────────────────────────────────────────────────── */
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
+  const USE_MOCK_DATA   = true; // set to false once backend is live
+
+  /* ─────────────────────────────────────────────────────────
+     MOCK DATA — displayed immediately on load
+  ─────────────────────────────────────────────────────────── */
+  const MOCK_BLESSINGS = [
+    {
+      id: 'm1',
+      name: 'משפחת כהן',
+      blessing: 'נועה ועפרי היקרים, שיהיה הבית שלכם מלא שחוק, אהבה ואור. מאחלים לכם חיים של שמחה ושפע.',
+      mediaUrl: null,
+      mediaType: null,
+      timestamp: Date.now() - 10 * 60000,
+    },
+    {
+      id: 'm2',
+      name: 'דנה ויוסי',
+      blessing: 'ראינו אתכם גדלים ומאז ידענו שתמצאו אחד את השני. כל הכבוד לזוג היפה הזה! בריאות ואושר לנצח.',
+      mediaUrl: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80',
+      mediaType: 'image',
+      timestamp: Date.now() - 25 * 60000,
+    },
+    {
+      id: 'm3',
+      name: 'מירי לוי',
+      blessing: 'יום החתונה הוא רק ההתחלה של הרפתקה מדהימה. תמיד תזכרו לצחוק ביחד, ולשמור על הקסם הזה.',
+      mediaUrl: null,
+      mediaType: null,
+      timestamp: Date.now() - 45 * 60000,
+    },
+    {
+      id: 'm4',
+      name: 'אחיה וברק',
+      blessing: 'עפרי – שמרת את ההבטחה 🙏 נועה – לקחת את הגבר הכי טוב שאנחנו מכירים. שתהיו מאושרים!',
+      mediaUrl: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600&q=80',
+      mediaType: 'image',
+      timestamp: Date.now() - 70 * 60000,
+    },
+    {
+      id: 'm5',
+      name: 'סבתא רחל',
+      blessing: 'ילדים יקרים שלי, כל חיי חיכיתי ליום הזה. שיהיה לכם בית מלא ילדים ונכדים וכל טוב. בריאות ושמחה.',
+      mediaUrl: null,
+      mediaType: null,
+      timestamp: Date.now() - 90 * 60000,
+    },
+    {
+      id: 'm6',
+      name: 'חברים מהצבא',
+      blessing: 'עפרי, מאז ששמענו שמצאת את האהבה ידענו שצ׳ופצ׳יק לא ישאר לבד לנצח 😄 ברכות חמות לזוג!',
+      mediaUrl: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=600&q=80',
+      mediaType: 'image',
+      timestamp: Date.now() - 110 * 60000,
+    },
+  ];
+
+  /* ─────────────────────────────────────────────────────────
+     STATE
+  ─────────────────────────────────────────────────────────── */
+  let allBlessings = [...MOCK_BLESSINGS];
+  let selectedFile = null;
+
+  /* ─────────────────────────────────────────────────────────
+     RENDER WALL
+  ─────────────────────────────────────────────────────────── */
+  function renderWall(blessings) {
+    const grid = document.getElementById('wallGrid');
+    grid.innerHTML = '';
+
+    if (!blessings.length) {
+      grid.innerHTML = '<p class="empty-state">עדיין אין ברכות תואמות לחיפוש שלך…</p>';
+      return;
+    }
+
+    blessings.forEach((b, i) => {
+      const card = document.createElement('article');
+      card.className = 'blessing-card';
+      card.setAttribute('role', 'listitem');
+      card.style.animationDelay = `${i * 0.07}s`;
+
+      let mediaHtml = '';
+      if (b.mediaUrl) {
+        if (b.mediaType === 'video') {
+          mediaHtml = `<video class="card-media-video" src="${escHtml(b.mediaUrl)}" controls playsinline muted preload="metadata"></video>`;
+        } else {
+          mediaHtml = `<img class="card-media" src="${escHtml(b.mediaUrl)}" alt="תמונה מ-${escHtml(b.name)}" loading="lazy" />`;
+        }
+      }
+
+      card.innerHTML = `
+        ${mediaHtml}
+        <div class="card-body">
+          <p class="card-quote">${escHtml(b.blessing)}</p>
+          <div class="card-footer">
+            <span class="card-name">${escHtml(b.name)}</span>
+            <span class="card-heart">♡</span>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;');
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     SEARCH
+  ─────────────────────────────────────────────────────────── */
+  document.getElementById('searchInput').addEventListener('input', function () {
+    const q = this.value.trim().toLowerCase();
+    const filtered = q
+      ? allBlessings.filter(b => b.name.toLowerCase().includes(q))
+      : allBlessings;
+    renderWall(filtered);
+  });
+
+  /* ─────────────────────────────────────────────────────────
+     FILE UPLOAD PREVIEW
+  ─────────────────────────────────────────────────────────── */
+  const fileInput    = document.getElementById('fileInput');
+  const uploadArea   = document.getElementById('uploadArea');
+  const uploadPreview= document.getElementById('uploadPreview');
+  const previewImg   = document.getElementById('previewImg');
+  const previewName  = document.getElementById('previewName');
+  const removeFile   = document.getElementById('removeFile');
+
+  fileInput.addEventListener('change', handleFile);
+
+  uploadArea.addEventListener('dragover', e => {
+    e.preventDefault();
+    uploadArea.classList.add('dragover');
+  });
+  uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+  uploadArea.addEventListener('drop', e => {
+    e.preventDefault();
+    uploadArea.classList.remove('dragover');
+    if (e.dataTransfer.files.length) {
+      fileInput.files = e.dataTransfer.files;
+      handleFile();
+    }
+  });
+
+  function handleFile() {
+    const file = fileInput.files[0];
+    if (!file) return;
+    selectedFile = file;
+    previewName.textContent = file.name;
+    if (file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        previewImg.src = e.target.result;
+        previewImg.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    } else {
+      previewImg.style.display = 'none';
+    }
+    uploadPreview.classList.add('show');
+  }
+
+  removeFile.addEventListener('click', () => {
+    selectedFile = null;
+    fileInput.value = '';
+    previewImg.src = '';
+    previewImg.style.display = 'none';
+    uploadPreview.classList.remove('show');
+  });
+
+  /* ─────────────────────────────────────────────────────────
+     TOAST
+  ─────────────────────────────────────────────────────────── */
+  function showToast(msg, duration = 3500) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), duration);
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     FORM SUBMIT
+  ─────────────────────────────────────────────────────────── */
+  document.getElementById('blessingForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const name     = document.getElementById('guestName').value.trim();
+    const blessing = document.getElementById('blessingText').value.trim();
+
+    if (!name)     { showToast('נא למלא שם 😊'); return; }
+    if (!blessing) { showToast('נא לכתוב ברכה קצרה ✍️'); return; }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = 'שולח… <span class="spinner"></span>';
+
+    try {
+      let mediaUrl  = null;
+      let mediaType = null;
+
+      /* ── Convert file to base64 ── */
+      let fileBase64   = null;
+      let fileMimeType = null;
+      let fileName     = null;
+
+      if (selectedFile) {
+        fileBase64   = await toBase64(selectedFile);
+        fileMimeType = selectedFile.type;
+        fileName     = selectedFile.name;
+        mediaType    = selectedFile.type.startsWith('video/') ? 'video' : 'image';
+      }
+
+      /* ── Payload ── */
+      const payload = {
+        name,
+        blessing,
+        fileBase64,
+        fileMimeType,
+        fileName,
+      };
+
+      if (USE_MOCK_DATA) {
+        /* MOCK: simulate network delay + add card locally */
+        await new Promise(r => setTimeout(r, 900));
+        mediaUrl = selectedFile ? URL.createObjectURL(selectedFile) : null;
+      } else {
+        /* REAL: POST to Google Apps Script */
+        const res  = await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error('שגיאת שרת');
+        const data = await res.json();
+        mediaUrl = data.fileUrl || null;
+      }
+
+      /* Prepend new card */
+      const newCard = {
+        id:        'u' + Date.now(),
+        name,
+        blessing,
+        mediaUrl,
+        mediaType,
+        timestamp: Date.now(),
+      };
+      allBlessings.unshift(newCard);
+      renderWall(allBlessings);
+
+      /* Reset form */
+      this.reset();
+      selectedFile = null;
+      uploadPreview.classList.remove('show');
+      previewImg.style.display = 'none';
+
+      showToast('הברכה נשלחה בהצלחה! תודה רבה 💛');
+
+      /* Scroll to wall */
+      document.getElementById('wallGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    } catch (err) {
+      console.error(err);
+      showToast('שגיאה בשליחה, אנא נסו שוב 😔');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = 'שלחו ברכה &#8594;';
+    }
+  });
+
+  function toBase64(file) {
+    return new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload  = () => resolve(r.result.split(',')[1]);
+      r.onerror = () => reject(new Error('קריאת קובץ נכשלה'));
+      r.readAsDataURL(file);
+    });
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     INIT
+  ─────────────────────────────────────────────────────────── */
+  renderWall(allBlessings);
+</script>
+
+<!--
+═══════════════════════════════════════════════════════════════
+  GOOGLE APPS SCRIPT SETUP GUIDE
+  ──────────────────────────────────────────────────────────────
+  1. CREATE A SPREADSHEET
+     • Go to https://sheets.google.com and create a new spreadsheet.
+     • Name it "נועה ועפרי – ברכות".
+     • Add headers in Row 1: Timestamp | Name | Blessing | File URL | File Type
+
+  2. CREATE A DRIVE FOLDER
+     • Go to https://drive.google.com and create a folder named "Wedding Media".
+     • Copy its folder ID from the URL: drive.google.com/drive/folders/FOLDER_ID
+
+  3. OPEN APPS SCRIPT
+     • In the spreadsheet: Extensions → Apps Script.
+     • Delete any existing code and paste the script below.
+
+  4. APPS SCRIPT CODE:
+  ───────────────────────────────────────────────────────────────
+  const SHEET_ID  = 'YOUR_SPREADSHEET_ID'; // from the sheet URL
+  const FOLDER_ID = 'YOUR_FOLDER_ID';      // from the Drive URL
+
+  function doPost(e) {
+    try {
+      const data     = JSON.parse(e.postData.contents);
+      const sheet    = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
+      const folder   = DriveApp.getFolderById(FOLDER_ID);
+
+      let fileUrl = '';
+
+      // Upload media to Drive if present
+      if (data.fileBase64 && data.fileMimeType && data.fileName) {
+        const decoded = Utilities.base64Decode(data.fileBase64);
+        const blob    = Utilities.newBlob(decoded, data.fileMimeType, data.fileName);
+        const file    = folder.createFile(blob);
+        file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+        fileUrl = file.getDownloadUrl();
+      }
+
+      // Append row to sheet
+      sheet.appendRow([
+        new Date(),
+        data.name,
+        data.blessing,
+        fileUrl,
+        data.fileMimeType || '',
+      ]);
+
+      return ContentService
+        .createTextOutput(JSON.stringify({ ok: true, fileUrl }))
+        .setMimeType(ContentService.MimeType.JSON);
+
+    } catch (err) {
+      return ContentService
+        .createTextOutput(JSON.stringify({ ok: false, error: err.message }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+  }
+  ───────────────────────────────────────────────────────────────
+
+  5. DEPLOY
+     • Click Deploy → New Deployment → Web App.
+     • Execute as: Me (your Google account).
+     • Who has access: Anyone.
+     • Click Deploy and copy the Web App URL.
+
+  6. WIRE IT UP
+     • In index.html set: const APPS_SCRIPT_URL = 'YOUR_WEB_APP_URL';
+     • Set: const USE_MOCK_DATA = false;
+
+  7. LOAD EXISTING BLESSINGS (optional)
+     • Add a doGet() function that reads the sheet and returns JSON.
+     • Fetch it on page load to populate the wall from real data.
+═══════════════════════════════════════════════════════════════
+-->
+</body>
+</html>
