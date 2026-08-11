@@ -3,1022 +3,1041 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>נועה ועפרי – קיר מזכרות</title>
+  <title>נועה &amp; עפרי — מזמינים אתכם לחגוג</title>
+  <meta name="description" content="הזמנה לחתונה של נועה ועפרי" />
+
+  <!-- Google Fonts: Hebrew-compatible -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Secular+One&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Assistant:wght@300;400;600;700&display=swap"
+    rel="stylesheet"
+  />
 
   <style>
-    /* ─── TOKENS ─────────────────────────────────────────── */
+    /* ===================== Design Tokens ===================== */
     :root {
-      --cream:   #faf6f0;
-      --parchment: #f3ece1;
-      --blush:   #e8c9b8;
-      --rose:    #c9836a;
-      --gold:    #b8924a;
-      --gold-lt: #d4aa6a;
-      --mocha:   #6b4c3b;
-      --ink:     #2e1f14;
-      --white:   #ffffff;
-
-      --serif: 'Secular One', sans-serif;
-      --sans:  'Secular One', sans-serif;
-
-      --radius: 16px;
-      --shadow: 0 4px 32px rgba(107,76,59,.10);
-      --shadow-lg: 0 12px 48px rgba(107,76,59,.16);
+      --cream: #faf6f0;
+      --off-white: #fffdfa;
+      --sand: #f3ebe1;
+      --gold: #c9a86a;
+      --gold-deep: #b08d4f;
+      --rose-gold: #d8a48f;
+      --ink: #3a3330;
+      --muted: #8a7f77;
+      --line: rgba(201, 168, 106, 0.28);
+      --shadow: 0 20px 60px rgba(58, 51, 48, 0.10);
+      --shadow-soft: 0 10px 30px rgba(58, 51, 48, 0.08);
+      --radius: 22px;
+      --radius-sm: 14px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    /* ─── RESET ──────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    /* ===================== Reset ===================== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
-      font-family: var(--sans);
+      font-family: "Assistant", "Heebo", system-ui, sans-serif;
       background: var(--cream);
       color: var(--ink);
-      direction: rtl;
-      min-height: 100vh;
+      line-height: 1.7;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* ─── BACKGROUND TEXTURE ─────────────────────────────── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(232,201,184,.35) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(184,146,74,.15) 0%, transparent 55%);
-      pointer-events: none;
-      z-index: 0;
+    h1,
+    h2,
+    h3 {
+      font-family: "Heebo", "Assistant", sans-serif;
+      font-weight: 700;
+      line-height: 1.2;
     }
 
-    main { position: relative; z-index: 1; }
-
-    /* ─── FLORAL DIVIDER SVG ─────────────────────────────── */
-    .divider {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin: 0 auto 40px;
-      color: var(--gold);
-      opacity: .75;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
-    .divider::before, .divider::after {
-      content: '';
-      flex: 1;
-      max-width: 120px;
-      height: 1px;
-      background: linear-gradient(to var(--end, left), var(--gold), transparent);
-    }
-    .divider::before { --end: right; }
 
-    /* ─── HERO / HEADER ──────────────────────────────────── */
-    .hero {
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1080px, 92%);
+      margin-inline: auto;
+    }
+
+    section {
+      padding: clamp(56px, 9vw, 110px) 0;
+    }
+
+    /* ===================== Reveal Animation ===================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(34px);
+      transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ===================== Section Titles ===================== */
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.82rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-size: clamp(1.9rem, 4.5vw, 2.9rem);
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 560px;
+      margin-inline: auto;
+    }
+
+    .center {
       text-align: center;
-      padding: 80px 24px 64px;
+    }
+
+    .divider {
+      width: 70px;
+      height: 2px;
+      margin: 22px auto;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
       position: relative;
     }
-
-    .hero-eyebrow {
-      font-family: var(--sans);
-      font-size: .8rem;
-      font-weight: 500;
-      letter-spacing: .2em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 24px;
-      opacity: 0;
-      animation: fadeUp .8s .2s ease forwards;
-    }
-
-    .hero-names {
-      font-family: var(--serif);
-      font-size: clamp(3.5rem, 11vw, 7rem);
-      font-weight: 300;
-      line-height: 1.05;
-      color: var(--mocha);
-      letter-spacing: .02em;
-      opacity: 0;
-      animation: fadeUp .9s .35s ease forwards;
-    }
-    .hero-names em {
-      font-style: italic;
-      color: var(--rose);
-    }
-    .hero-ampersand {
-      display: block;
-      font-size: clamp(2rem, 6vw, 4rem);
-      color: var(--gold);
-      margin: 4px 0;
-    }
-
-    .hero-date {
-      font-family: var(--serif);
-      font-size: clamp(1rem, 3vw, 1.4rem);
-      font-weight: 300;
-      font-style: italic;
-      color: var(--rose);
-      margin-top: 20px;
-      opacity: 0;
-      animation: fadeUp .8s .5s ease forwards;
-    }
-
-    .hero-tagline {
-      font-family: var(--sans);
-      font-size: .95rem;
-      font-weight: 300;
-      color: var(--mocha);
-      opacity: .7;
-      margin-top: 10px;
-      opacity: 0;
-      animation: fadeUp .8s .65s ease forwards;
-    }
-
-    /* petal decorations */
-    .petals {
+    .divider::after {
+      content: "♥";
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      pointer-events: none;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+      color: var(--rose-gold);
+      background: var(--cream);
+      padding: 0 10px;
+      font-size: 0.9rem;
+    }
+
+    /* ===================== Hero ===================== */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: #fff;
+      padding: 40px 0;
       overflow: hidden;
     }
-    .petal {
+
+    .hero::before {
+      content: "";
       position: absolute;
-      width: 8px; height: 12px;
-      background: radial-gradient(ellipse, var(--blush) 0%, transparent 80%);
-      border-radius: 50% 50% 50% 0;
-      opacity: 0;
-      animation: fall linear infinite;
-    }
-    .petal:nth-child(1)  { left: 10%; animation-duration: 9s;  animation-delay: 0s;   width:6px; height:9px; }
-    .petal:nth-child(2)  { left: 22%; animation-duration: 11s; animation-delay: 2s; }
-    .petal:nth-child(3)  { left: 38%; animation-duration: 8s;  animation-delay: 1s;   width:5px; height:8px; }
-    .petal:nth-child(4)  { left: 55%; animation-duration: 13s; animation-delay: 3s; }
-    .petal:nth-child(5)  { left: 70%; animation-duration: 10s; animation-delay: .5s; }
-    .petal:nth-child(6)  { left: 83%; animation-duration: 7s;  animation-delay: 4s;   width:7px; height:11px; }
-    .petal:nth-child(7)  { left: 93%; animation-duration: 12s; animation-delay: 1.5s; }
-
-    @keyframes fall {
-      0%   { transform: translateY(-40px) rotate(0deg);   opacity: .7; }
-      100% { transform: translateY(400px) rotate(360deg); opacity: 0; }
+      inset: 0;
+      background-image: url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80");
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.08);
+      z-index: -2;
     }
 
-    /* ─── SECTION TITLES ─────────────────────────────────── */
-    .section-title {
-      font-family: var(--serif);
-      font-size: clamp(1.6rem, 4vw, 2.4rem);
-      font-weight: 400;
-      color: var(--mocha);
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(58, 51, 48, 0.45),
+        rgba(58, 51, 48, 0.55) 55%,
+        rgba(58, 51, 48, 0.7)
+      );
+      z-index: -1;
+    }
+
+    .hero-inner {
+      width: min(760px, 90%);
+    }
+
+    .hero .pre {
+      font-size: 1rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 18px;
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 12vw, 6.5rem);
+      font-weight: 900;
+      letter-spacing: 0.01em;
+      text-shadow: 0 4px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .hero h1 .amp {
+      display: inline-block;
+      color: var(--gold);
+      font-weight: 300;
+      margin: 0 0.15em;
+      font-size: 0.75em;
+    }
+
+    .hero .date {
+      margin-top: 18px;
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+    }
+
+    .hero .place {
+      margin-top: 6px;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    /* ===================== Countdown ===================== */
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: clamp(10px, 3vw, 26px);
+      margin-top: 40px;
+    }
+
+    .cd-box {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: var(--radius-sm);
+      padding: 16px clamp(12px, 3vw, 24px);
+      min-width: clamp(64px, 18vw, 96px);
+    }
+
+    .cd-num {
+      font-family: "Heebo", sans-serif;
+      font-size: clamp(1.6rem, 6vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .cd-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      color: rgba(255, 255, 255, 0.82);
+      margin-top: 8px;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 26px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      animation: floaty 2.4s ease-in-out infinite;
+    }
+    @keyframes floaty {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ===================== Details Cards ===================== */
+    .details {
+      background: var(--off-white);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .card {
+      background: var(--cream);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 38px 28px;
       text-align: center;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow);
+    }
+
+    .card .icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--rose-gold));
+      color: #fff;
+    }
+    .card .icon svg {
+      width: 30px;
+      height: 30px;
+    }
+
+    .card h3 {
+      font-size: 1.35rem;
       margin-bottom: 8px;
     }
-    .section-sub {
-      font-family: var(--sans);
-      font-size: .88rem;
-      font-weight: 300;
-      color: var(--rose);
-      text-align: center;
-      margin-bottom: 32px;
+
+    .card p {
+      color: var(--muted);
+      font-size: 1rem;
     }
 
-    /* ─── FORM SECTION ───────────────────────────────────── */
-    .form-section {
-      max-width: 620px;
-      margin: 0 auto 72px;
-      padding: 0 20px;
+    .card .accent {
+      color: var(--gold-deep);
+      font-weight: 600;
     }
 
-    .form-card {
-      background: var(--white);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-lg);
-      padding: 40px 36px;
-      border-top: 3px solid var(--gold-lt);
+    /* ===================== Timeline ===================== */
+    .timeline {
+      margin-top: 16px;
+      display: inline-block;
+      text-align: right;
+    }
+    .timeline li {
+      list-style: none;
       position: relative;
-      overflow: hidden;
+      padding-inline-start: 22px;
+      margin: 6px 0;
+      color: var(--muted);
     }
-    .form-card::before {
-      content: '♡';
+    .timeline li::before {
+      content: "";
       position: absolute;
-      top: -8px; left: 24px;
-      font-size: 1.8rem;
-      color: var(--gold-lt);
-      line-height: 1;
+      inset-inline-start: 0;
+      top: 0.7em;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+    .timeline li b {
+      color: var(--ink);
     }
 
-    .field-group {
+    /* ===================== Buttons ===================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 1.05rem;
+      font-weight: 600;
+      padding: 15px 34px;
+      border-radius: 999px;
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease),
+        background 0.3s var(--ease);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+      color: #fff;
+      box-shadow: 0 12px 26px rgba(176, 141, 79, 0.35);
+    }
+    .btn-gold:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 34px rgba(176, 141, 79, 0.45);
+    }
+
+    .btn-waze {
+      margin-top: 18px;
+      background: #33ccff;
+      color: #fff;
+      box-shadow: 0 12px 26px rgba(51, 204, 255, 0.35);
+    }
+    .btn-waze:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 34px rgba(51, 204, 255, 0.45);
+    }
+    .btn-waze svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .btn[disabled] {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ===================== Upload Section ===================== */
+    .wishes {
+      background: linear-gradient(180deg, var(--off-white), var(--sand));
+    }
+
+    .form-wrap {
+      max-width: 640px;
+      margin: 48px auto 0;
+      background: var(--off-white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: clamp(26px, 5vw, 48px);
+      box-shadow: var(--shadow);
+    }
+
+    .field {
       margin-bottom: 22px;
+      text-align: right;
     }
-    label {
-      display: block;
-      font-size: .82rem;
-      font-weight: 500;
-      color: var(--mocha);
-      margin-bottom: 7px;
-      letter-spacing: .03em;
-    }
-    .required { color: var(--rose); margin-right: 2px; }
 
-    input[type="text"],
-    textarea {
+    .field label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--ink);
+      font-size: 1rem;
+    }
+    .field label .req {
+      color: var(--rose-gold);
+    }
+
+    .field input[type="text"],
+    .field textarea {
       width: 100%;
-      font-family: var(--sans);
-      font-size: .95rem;
-      font-weight: 300;
+      font-family: inherit;
+      font-size: 1rem;
       color: var(--ink);
       background: var(--cream);
-      border: 1.5px solid #e0d5c8;
-      border-radius: 10px;
-      padding: 12px 16px;
-      direction: rtl;
-      transition: border-color .2s, box-shadow .2s;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      transition: border 0.3s, box-shadow 0.3s;
+    }
+    .field input[type="text"]:focus,
+    .field textarea:focus {
       outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(201, 168, 106, 0.15);
+    }
+    .field textarea {
       resize: vertical;
+      min-height: 120px;
     }
-    input[type="text"]:focus,
-    textarea:focus {
-      border-color: var(--gold-lt);
-      box-shadow: 0 0 0 3px rgba(184,146,74,.12);
-      background: var(--white);
-    }
-    textarea { min-height: 130px; }
-    input::placeholder, textarea::placeholder { color: #b8a898; }
 
-    /* upload area */
-    .upload-area {
-      border: 2px dashed #d4c4b4;
-      border-radius: 10px;
-      padding: 26px 20px;
+    /* File dropzone */
+    .dropzone {
+      position: relative;
+      border: 2px dashed var(--gold);
+      border-radius: var(--radius-sm);
+      background: rgba(201, 168, 106, 0.06);
+      padding: 30px 20px;
       text-align: center;
       cursor: pointer;
-      transition: border-color .2s, background .2s;
-      position: relative;
-      background: var(--cream);
+      transition: background 0.3s, border-color 0.3s;
     }
-    .upload-area:hover, .upload-area.dragover {
-      border-color: var(--gold);
-      background: #fdf8f2;
+    .dropzone:hover {
+      background: rgba(201, 168, 106, 0.12);
     }
-    .upload-area input[type="file"] {
+    .dropzone input[type="file"] {
       position: absolute;
       inset: 0;
       opacity: 0;
       cursor: pointer;
-      width: 100%;
-      height: 100%;
     }
-    .upload-icon { font-size: 2rem; display: block; margin-bottom: 8px; }
-    .upload-text {
-      font-size: .85rem;
-      color: var(--mocha);
-      font-weight: 400;
+    .dropzone .dz-icon {
+      color: var(--gold-deep);
+      margin-bottom: 10px;
     }
-    .upload-hint {
-      font-size: .75rem;
-      color: #a09080;
+    .dropzone .dz-icon svg {
+      width: 40px;
+      height: 40px;
+      margin: 0 auto;
+    }
+    .dropzone .dz-title {
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .dropzone .dz-sub {
+      font-size: 0.9rem;
+      color: var(--muted);
       margin-top: 4px;
     }
-    .upload-preview {
-      margin-top: 12px;
-      display: none;
-      align-items: center;
+
+    /* File previews */
+    .previews {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
       gap: 10px;
-      background: var(--parchment);
-      border-radius: 8px;
-      padding: 10px 14px;
+      margin-top: 16px;
     }
-    .upload-preview.show { display: flex; }
-    .upload-preview img {
-      width: 50px; height: 50px;
+    .preview {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 1;
+      background: var(--sand);
+      border: 1px solid var(--line);
+    }
+    .preview img,
+    .preview video {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
+    }
+    .preview .badge {
+      position: absolute;
+      inset-block-start: 4px;
+      inset-inline-start: 4px;
+      background: rgba(58, 51, 48, 0.7);
+      color: #fff;
+      font-size: 0.65rem;
+      padding: 2px 6px;
       border-radius: 6px;
     }
-    .upload-preview-name {
-      font-size: .82rem;
-      color: var(--mocha);
-      flex: 1;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .remove-file {
-      background: none;
+    .preview .rm {
+      position: absolute;
+      inset-block-start: 4px;
+      inset-inline-end: 4px;
+      width: 22px;
+      height: 22px;
       border: none;
+      border-radius: 50%;
+      background: rgba(58, 51, 48, 0.75);
+      color: #fff;
       cursor: pointer;
-      color: var(--rose);
-      font-size: 1.1rem;
-      padding: 0 4px;
+      font-size: 0.9rem;
+      line-height: 1;
+      display: grid;
+      place-items: center;
     }
 
-    /* submit button */
-    .btn-submit {
-      width: 100%;
-      background: linear-gradient(135deg, var(--gold) 0%, var(--rose) 100%);
-      color: var(--white);
-      font-family: var(--sans);
-      font-size: 1rem;
-      font-weight: 500;
-      letter-spacing: .05em;
-      border: none;
-      border-radius: 50px;
-      padding: 15px 32px;
-      cursor: pointer;
+    .submit-row {
       margin-top: 8px;
-      transition: opacity .2s, transform .15s;
-      position: relative;
-      overflow: hidden;
+      text-align: center;
     }
-    .btn-submit:hover   { opacity: .92; transform: translateY(-1px); }
-    .btn-submit:active  { transform: translateY(0); }
-    .btn-submit:disabled { opacity: .6; cursor: not-allowed; transform: none; }
-    .btn-submit .spinner {
-      display: inline-block;
-      width: 16px; height: 16px;
-      border: 2px solid rgba(255,255,255,.4);
+    .submit-row .btn {
+      width: 100%;
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.45);
       border-top-color: #fff;
       border-radius: 50%;
-      animation: spin .7s linear infinite;
-      vertical-align: middle;
-      margin-left: 8px;
+      animation: spin 0.8s linear infinite;
+      display: none;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* success toast */
-    .toast {
-      position: fixed;
-      bottom: 28px;
-      left: 50%;
-      transform: translateX(-50%) translateY(80px);
-      background: var(--mocha);
-      color: var(--white);
-      font-family: var(--sans);
-      font-size: .9rem;
-      font-weight: 400;
-      border-radius: 50px;
-      padding: 12px 28px;
-      box-shadow: var(--shadow-lg);
-      z-index: 999;
-      transition: transform .4s cubic-bezier(.34,1.56,.64,1);
-      white-space: nowrap;
+    .is-loading .spinner {
+      display: inline-block;
     }
-    .toast.show { transform: translateX(-50%) translateY(0); }
-
-    /* ─── MEMORY WALL ────────────────────────────────────── */
-    .wall-section {
-      max-width: 1100px;
-      margin: 0 auto 80px;
-      padding: 0 20px;
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
-    .search-bar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      max-width: 400px;
-      margin: 0 auto 36px;
-      background: var(--white);
-      border: 1.5px solid #e0d5c8;
-      border-radius: 50px;
-      padding: 10px 18px;
-      box-shadow: var(--shadow);
-      transition: border-color .2s, box-shadow .2s;
-    }
-    .search-bar:focus-within {
-      border-color: var(--gold-lt);
-      box-shadow: 0 0 0 3px rgba(184,146,74,.12);
-    }
-    .search-icon { color: var(--gold); font-size: 1rem; flex-shrink: 0; }
-    .search-bar input {
-      border: none;
-      background: none;
-      font-family: var(--sans);
-      font-size: .9rem;
-      color: var(--ink);
-      direction: rtl;
-      outline: none;
-      flex: 1;
-    }
-    .search-bar input::placeholder { color: #b8a898; }
-
-    .wall-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    /* card */
-    .blessing-card {
-      background: var(--white);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: cardIn .5s ease forwards;
-      transition: transform .25s, box-shadow .25s;
-    }
-    .blessing-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-    }
-    @keyframes cardIn {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .card-media {
-      width: 100%;
-      aspect-ratio: 4/3;
-      object-fit: cover;
-      display: block;
-    }
-    .card-media-video {
-      width: 100%;
-      aspect-ratio: 4/3;
-      object-fit: cover;
-      display: block;
-    }
-
-    .card-body {
-      padding: 20px 20px 16px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .card-quote {
-      font-family: var(--serif);
-      font-size: 1.08rem;
-      font-weight: 400;
-      line-height: 1.65;
-      color: var(--ink);
-      flex: 1;
-      position: relative;
-      padding-right: 18px;
-    }
-    .card-quote::before {
-      content: '"';
-      position: absolute;
-      right: 0; top: -4px;
-      font-size: 2.2rem;
-      color: var(--gold-lt);
-      line-height: 1;
-      font-family: var(--serif);
-    }
-
-    .card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    .form-note {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-align: center;
       margin-top: 14px;
-      padding-top: 12px;
-      border-top: 1px solid #f0e8de;
     }
-    .card-name {
-      font-family: var(--sans);
-      font-size: .82rem;
-      font-weight: 600;
-      color: var(--rose);
-      letter-spacing: .02em;
-    }
-    .card-heart { color: var(--gold-lt); font-size: .85rem; }
 
-    /* empty state */
-    .empty-state {
-      grid-column: 1/-1;
+    .error-msg {
+      color: #c0392b;
+      font-size: 0.9rem;
       text-align: center;
-      padding: 60px 20px;
-      color: var(--mocha);
-      opacity: .5;
-      font-family: var(--serif);
-      font-size: 1.3rem;
-      font-style: italic;
+      margin-top: 12px;
+      display: none;
+    }
+    .error-msg.show {
+      display: block;
     }
 
-    /* ─── FOOTER ─────────────────────────────────────────── */
+    /* ===================== Success Toast/Popup ===================== */
+    .toast-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(58, 51, 48, 0.45);
+      backdrop-filter: blur(4px);
+      display: grid;
+      place-items: center;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s var(--ease);
+      padding: 20px;
+    }
+    .toast-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .toast {
+      background: var(--off-white);
+      border-radius: var(--radius);
+      padding: 44px 36px;
+      text-align: center;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: var(--shadow);
+      transform: translateY(20px) scale(0.96);
+      transition: transform 0.5s var(--ease);
+    }
+    .toast-overlay.show .toast {
+      transform: none;
+    }
+    .toast .tick {
+      width: 74px;
+      height: 74px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--rose-gold));
+      display: grid;
+      place-items: center;
+      color: #fff;
+    }
+    .toast .tick svg {
+      width: 38px;
+      height: 38px;
+    }
+    .toast h3 {
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+    .toast p {
+      color: var(--muted);
+    }
+    .toast .btn {
+      margin-top: 24px;
+    }
+
+    /* ===================== Footer ===================== */
     footer {
+      background: var(--ink);
+      color: rgba(255, 255, 255, 0.8);
       text-align: center;
-      padding: 32px 24px 48px;
-      font-size: .78rem;
-      color: #a89888;
-      font-weight: 300;
-      position: relative;
+      padding: 46px 0;
     }
-    footer span {
-      color: var(--rose);
+    footer .names {
+      font-family: "Heebo", sans-serif;
+      font-size: 1.6rem;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    footer .amp {
+      color: var(--gold);
+    }
+    footer small {
+      color: rgba(255, 255, 255, 0.55);
     }
 
-    /* ─── KEYFRAMES ──────────────────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* ===================== Responsive ===================== */
+    @media (max-width: 820px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
     }
-
-    /* ─── RESPONSIVE ─────────────────────────────────────── */
     @media (max-width: 480px) {
-      .form-card { padding: 28px 20px; }
-      .wall-grid { grid-template-columns: 1fr; }
-      .hero { padding: 60px 20px 48px; }
+      .cd-box {
+        min-width: 0;
+        flex: 1;
+        padding: 12px 6px;
+      }
+      .countdown {
+        gap: 8px;
+      }
     }
-
-    /* ─── STAGGER DELAYS FOR WALL ────────────────────────── */
-    .blessing-card:nth-child(1) { animation-delay: .05s; }
-    .blessing-card:nth-child(2) { animation-delay: .12s; }
-    .blessing-card:nth-child(3) { animation-delay: .19s; }
-    .blessing-card:nth-child(4) { animation-delay: .26s; }
-    .blessing-card:nth-child(5) { animation-delay: .33s; }
-    .blessing-card:nth-child(6) { animation-delay: .40s; }
   </style>
 </head>
+
 <body>
+  <!-- ===================== HERO ===================== -->
+  <header class="hero" id="top">
+    <div class="hero-inner">
+      <p class="pre">מתחתנים!</p>
+      <h1>נועה <span class="amp">&amp;</span> עפרי</h1>
+      <p class="date">יום חמישי · 25 במרץ 2027</p>
+      <p class="place">רוקח - מרחב אירועים תל אביבי</p>
 
-<!-- ════════════════════ HERO ════════════════════════════ -->
-<main>
-  <section class="hero">
-    <div class="petals" aria-hidden="true">
-      <div class="petal"></div><div class="petal"></div><div class="petal"></div>
-      <div class="petal"></div><div class="petal"></div><div class="petal"></div>
-      <div class="petal"></div>
+      <div class="countdown" id="countdown" aria-label="ספירה לאחור לחתונה">
+        <div class="cd-box">
+          <div class="cd-num" id="cd-days">00</div>
+          <div class="cd-label">ימים</div>
+        </div>
+        <div class="cd-box">
+          <div class="cd-num" id="cd-hours">00</div>
+          <div class="cd-label">שעות</div>
+        </div>
+        <div class="cd-box">
+          <div class="cd-num" id="cd-mins">00</div>
+          <div class="cd-label">דקות</div>
+        </div>
+        <div class="cd-box">
+          <div class="cd-num" id="cd-secs">00</div>
+          <div class="cd-label">שניות</div>
+        </div>
+      </div>
     </div>
+    <a class="scroll-hint" href="#wishes">גללו למטה ↓</a>
+  </header>
 
-    <p class="hero-eyebrow">יום חתונתם של</p>
+  <!-- ===================== WISHES / UPLOAD ===================== -->
+  <section class="wishes" id="wishes">
+    <div class="container center">
+      <div class="reveal">
+        <span class="eyebrow">שיתוף רגעים</span>
+        <h2 class="section-title">שלחו לנו ברכה ותמונות</h2>
+        <div class="divider"></div>
+        <p class="section-sub">
+          נשמח לקבל מכם ברכה חמה ולשתף את הרגעים היפים — העלו תמונות וסרטונים
+          מהאירוע
+        </p>
+      </div>
 
-    <h1 class="hero-names">
-      <em>נועה</em>
-      <span class="hero-ampersand">&amp;</span>
-      <em>עפרי</em>
-    </h1>
-
-    <p class="hero-date">כ״ג בסיוון תשפ״ה &nbsp;·&nbsp; <!--date placeholder--> יוני 2025</p>
-    <p class="hero-tagline">שתפו איתנו רגע, ברכה, ותמונה מהיום המיוחד</p>
-  </section>
-
-  <!-- ════════════════ FORM ════════════════════════════════ -->
-  <section class="form-section" aria-label="טופס ברכה">
-    <h2 class="section-title">שלחו לנו ברכה</h2>
-    <p class="section-sub">כל מילה שלכם תישמר לנו לעד</p>
-    <div class="divider" aria-hidden="true">✦</div>
-
-    <div class="form-card">
-      <form id="blessingForm" novalidate>
-
+      <form class="form-wrap reveal" id="wishForm" novalidate>
         <!-- Name -->
-        <div class="field-group">
-          <label for="guestName">שם <span class="required">*</span></label>
+        <div class="field">
+          <label for="guestName">שם האורחים <span class="req">*</span></label>
           <input
             type="text"
             id="guestName"
-            name="name"
-            placeholder="מה שמכם?"
-            maxlength="80"
+            name="guestName"
+            placeholder="לדוגמה: משפחת כהן"
             required
+            autocomplete="name"
           />
         </div>
 
-        <!-- Blessing -->
-        <div class="field-group">
-          <label for="blessingText">הברכה שלכם <span class="required">*</span></label>
+        <!-- Wish -->
+        <div class="field">
+          <label for="guestWish">טקסט ברכה</label>
           <textarea
-            id="blessingText"
-            name="blessing"
-            placeholder="כתבו לנו מה בלבכם… ✨"
-            maxlength="1000"
-            required
+            id="guestWish"
+            name="guestWish"
+            placeholder="כתבו כאן את הברכה שלכם לנועה ועפרי..."
           ></textarea>
         </div>
 
-        <!-- File Upload -->
-        <div class="field-group">
-          <label>תמונה או סרטון קצר <span style="color:#a09080;font-weight:300;">(אופציונלי)</span></label>
-          <div class="upload-area" id="uploadArea">
+        <!-- Files -->
+        <div class="field">
+          <label>העלאת תמונות וסרטונים</label>
+          <div class="dropzone" id="dropzone">
+            <div class="dz-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <path d="M17 8l-5-5-5 5" />
+                <path d="M12 3v12" />
+              </svg>
+            </div>
+            <div class="dz-title">לחצו כאן לבחירת קבצים</div>
+            <div class="dz-sub">ניתן לבחור מספר תמונות וסרטונים יחד</div>
             <input
               type="file"
               id="fileInput"
-              name="file"
+              name="files"
               accept="image/*,video/*"
+              multiple
             />
-            <span class="upload-icon">📎</span>
-            <div class="upload-text">לחצו להעלאה או גררו לכאן</div>
-            <div class="upload-hint">תמונות: JPG, PNG, HEIC &nbsp;|&nbsp; וידאו: MP4, MOV &nbsp;·&nbsp; עד 50MB</div>
           </div>
-          <div class="upload-preview" id="uploadPreview">
-            <img id="previewImg" src="" alt="תצוגה מקדימה" style="display:none;" />
-            <span class="upload-preview-name" id="previewName"></span>
-            <button type="button" class="remove-file" id="removeFile" aria-label="הסר קובץ">✕</button>
-          </div>
+          <div class="previews" id="previews"></div>
         </div>
 
-        <!-- Submit -->
-        <button type="submit" class="btn-submit" id="submitBtn">
-          שלחו ברכה &#8594;
-        </button>
+        <div class="submit-row">
+          <button type="submit" class="btn btn-gold" id="submitBtn">
+            <span class="spinner" aria-hidden="true"></span>
+            <span class="btn-text">שליחת הברכה</span>
+          </button>
+          <p class="error-msg" id="errorMsg"></p>
+          <p class="form-note">
+            תודה שאתם חלק מהיום המיוחד שלנו ♥
+          </p>
+        </div>
       </form>
     </div>
   </section>
 
-  <!-- ════════════════ MEMORY WALL ═════════════════════════ -->
-  <section class="wall-section" aria-label="קיר מזכרות">
-    <h2 class="section-title">קיר המזכרות</h2>
-    <p class="section-sub">כל הברכות שאספנו ביחד</p>
-    <div class="divider" aria-hidden="true">✦</div>
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="names">נועה <span class="amp">&amp;</span> עפרי</div>
+    <small>25.03.2027 · נתראה בשמחות</small>
+  </footer>
 
-    <div class="search-bar" role="search">
-      <span class="search-icon">🔍</span>
-      <input
-        type="text"
-        id="searchInput"
-        placeholder="חיפוש לפי שם…"
-        aria-label="חיפוש ברכות לפי שם"
-      />
+  <!-- ===================== SUCCESS POPUP ===================== -->
+  <div class="toast-overlay" id="toast">
+    <div class="toast" role="dialog" aria-modal="true" aria-live="polite">
+      <div class="tick" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 6 9 17l-5-5" />
+        </svg>
+      </div>
+      <h3>תודה מכל הלב!</h3>
+      <p>הברכה והתמונות שלכם התקבלו בהצלחה. נתראה בחתונה ♥</p>
+      <button class="btn btn-gold" id="toastClose">מעולה</button>
     </div>
+  </div>
 
-    <div class="wall-grid" id="wallGrid" role="list" aria-live="polite">
-      <!-- Cards injected by JS -->
-    </div>
-  </section>
-</main>
+  <script>
+    /* ============================================================
+     *  Google Apps Script Web App endpoint.
+     *  Replace with your deployed /exec URL.
+     * ============================================================ */
+    const GOOGLE_SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL";
 
-<footer>
-  <p>נועה <span>♡</span> עפרי &nbsp;·&nbsp; תמיד ולנצח</p>
-  <p style="margin-top:6px;">עם אהבה, לכל האורחים היקרים</p>
-</footer>
+    /* Wedding date — used for the countdown timer (local time). */
+    const WEDDING_DATE = new Date("2027-03-25T19:00:00");
 
-<!-- Toast notification -->
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+    /* Max total upload size guard (Apps Script practical limit ~50MB total).
+       We keep a safer client-side ceiling. */
+    const MAX_TOTAL_BYTES = 45 * 1024 * 1024; // 45MB
 
+    /* ===================== Countdown ===================== */
+    (function initCountdown() {
+      const el = {
+        days: document.getElementById("cd-days"),
+        hours: document.getElementById("cd-hours"),
+        mins: document.getElementById("cd-mins"),
+        secs: document.getElementById("cd-secs"),
+      };
 
-<!-- ════════════════ JAVASCRIPT ══════════════════════════ -->
-<script>
-  /* ─────────────────────────────────────────────────────────
-     CONFIGURATION
-     Replace APPS_SCRIPT_URL with your deployed Google Apps
-     Script Web App URL once set up (see setup guide below).
-  ─────────────────────────────────────────────────────────── */
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
-  const USE_MOCK_DATA   = true; // set to false once backend is live
+      function pad(n) {
+        return String(n).padStart(2, "0");
+      }
 
-  /* ─────────────────────────────────────────────────────────
-     MOCK DATA — displayed immediately on load
-  ─────────────────────────────────────────────────────────── */
-  const MOCK_BLESSINGS = [
-    {
-      id: 'm1',
-      name: 'משפחת כהן',
-      blessing: 'נועה ועפרי היקרים, שיהיה הבית שלכם מלא שחוק, אהבה ואור. מאחלים לכם חיים של שמחה ושפע.',
-      mediaUrl: null,
-      mediaType: null,
-      timestamp: Date.now() - 10 * 60000,
-    },
-    {
-      id: 'm2',
-      name: 'דנה ויוסי',
-      blessing: 'ראינו אתכם גדלים ומאז ידענו שתמצאו אחד את השני. כל הכבוד לזוג היפה הזה! בריאות ואושר לנצח.',
-      mediaUrl: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80',
-      mediaType: 'image',
-      timestamp: Date.now() - 25 * 60000,
-    },
-    {
-      id: 'm3',
-      name: 'מירי לוי',
-      blessing: 'יום החתונה הוא רק ההתחלה של הרפתקה מדהימה. תמיד תזכרו לצחוק ביחד, ולשמור על הקסם הזה.',
-      mediaUrl: null,
-      mediaType: null,
-      timestamp: Date.now() - 45 * 60000,
-    },
-    {
-      id: 'm4',
-      name: 'אחיה וברק',
-      blessing: 'עפרי – שמרת את ההבטחה 🙏 נועה – לקחת את הגבר הכי טוב שאנחנו מכירים. שתהיו מאושרים!',
-      mediaUrl: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600&q=80',
-      mediaType: 'image',
-      timestamp: Date.now() - 70 * 60000,
-    },
-    {
-      id: 'm5',
-      name: 'סבתא רחל',
-      blessing: 'ילדים יקרים שלי, כל חיי חיכיתי ליום הזה. שיהיה לכם בית מלא ילדים ונכדים וכל טוב. בריאות ושמחה.',
-      mediaUrl: null,
-      mediaType: null,
-      timestamp: Date.now() - 90 * 60000,
-    },
-    {
-      id: 'm6',
-      name: 'חברים מהצבא',
-      blessing: 'עפרי, מאז ששמענו שמצאת את האהבה ידענו שצ׳ופצ׳יק לא ישאר לבד לנצח 😄 ברכות חמות לזוג!',
-      mediaUrl: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=600&q=80',
-      mediaType: 'image',
-      timestamp: Date.now() - 110 * 60000,
-    },
-  ];
-
-  /* ─────────────────────────────────────────────────────────
-     STATE
-  ─────────────────────────────────────────────────────────── */
-  let allBlessings = [...MOCK_BLESSINGS];
-  let selectedFile = null;
-
-  /* ─────────────────────────────────────────────────────────
-     RENDER WALL
-  ─────────────────────────────────────────────────────────── */
-  function renderWall(blessings) {
-    const grid = document.getElementById('wallGrid');
-    grid.innerHTML = '';
-
-    if (!blessings.length) {
-      grid.innerHTML = '<p class="empty-state">עדיין אין ברכות תואמות לחיפוש שלך…</p>';
-      return;
-    }
-
-    blessings.forEach((b, i) => {
-      const card = document.createElement('article');
-      card.className = 'blessing-card';
-      card.setAttribute('role', 'listitem');
-      card.style.animationDelay = `${i * 0.07}s`;
-
-      let mediaHtml = '';
-      if (b.mediaUrl) {
-        if (b.mediaType === 'video') {
-          mediaHtml = `<video class="card-media-video" src="${escHtml(b.mediaUrl)}" controls playsinline muted preload="metadata"></video>`;
-        } else {
-          mediaHtml = `<img class="card-media" src="${escHtml(b.mediaUrl)}" alt="תמונה מ-${escHtml(b.name)}" loading="lazy" />`;
+      function tick() {
+        const diff = WEDDING_DATE.getTime() - Date.now();
+        if (diff <= 0) {
+          el.days.textContent = el.hours.textContent = el.mins.textContent = el.secs.textContent =
+            "00";
+          return;
         }
+        const s = Math.floor(diff / 1000);
+        el.days.textContent = pad(Math.floor(s / 86400));
+        el.hours.textContent = pad(Math.floor((s % 86400) / 3600));
+        el.mins.textContent = pad(Math.floor((s % 3600) / 60));
+        el.secs.textContent = pad(s % 60);
       }
 
-      card.innerHTML = `
-        ${mediaHtml}
-        <div class="card-body">
-          <p class="card-quote">${escHtml(b.blessing)}</p>
-          <div class="card-footer">
-            <span class="card-name">${escHtml(b.name)}</span>
-            <span class="card-heart">♡</span>
-          </div>
-        </div>
-      `;
-      grid.appendChild(card);
+      tick();
+      setInterval(tick, 1000);
+    })();
+
+    /* ===================== Reveal on scroll ===================== */
+    (function initReveal() {
+      const items = document.querySelectorAll(".reveal");
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("is-visible");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+      items.forEach((i) => io.observe(i));
+    })();
+
+    /* ===================== File handling ===================== */
+    const fileInput = document.getElementById("fileInput");
+    const previews = document.getElementById("previews");
+    /* We keep our own list so users can remove individual files. */
+    let selectedFiles = [];
+
+    fileInput.addEventListener("change", () => {
+      for (const f of fileInput.files) {
+        selectedFiles.push(f);
+      }
+      // Reset the native input so re-selecting the same file re-fires change.
+      fileInput.value = "";
+      renderPreviews();
     });
-  }
 
-  function escHtml(str) {
-    return String(str)
-      .replace(/&/g,'&amp;')
-      .replace(/</g,'&lt;')
-      .replace(/>/g,'&gt;')
-      .replace(/"/g,'&quot;');
-  }
+    function renderPreviews() {
+      previews.innerHTML = "";
+      selectedFiles.forEach((file, index) => {
+        const wrap = document.createElement("div");
+        wrap.className = "preview";
 
-  /* ─────────────────────────────────────────────────────────
-     SEARCH
-  ─────────────────────────────────────────────────────────── */
-  document.getElementById('searchInput').addEventListener('input', function () {
-    const q = this.value.trim().toLowerCase();
-    const filtered = q
-      ? allBlessings.filter(b => b.name.toLowerCase().includes(q))
-      : allBlessings;
-    renderWall(filtered);
-  });
+        const isVideo = file.type.startsWith("video/");
+        const media = document.createElement(isVideo ? "video" : "img");
+        media.src = URL.createObjectURL(file);
+        if (isVideo) media.muted = true;
+        wrap.appendChild(media);
 
-  /* ─────────────────────────────────────────────────────────
-     FILE UPLOAD PREVIEW
-  ─────────────────────────────────────────────────────────── */
-  const fileInput    = document.getElementById('fileInput');
-  const uploadArea   = document.getElementById('uploadArea');
-  const uploadPreview= document.getElementById('uploadPreview');
-  const previewImg   = document.getElementById('previewImg');
-  const previewName  = document.getElementById('previewName');
-  const removeFile   = document.getElementById('removeFile');
+        const badge = document.createElement("span");
+        badge.className = "badge";
+        badge.textContent = isVideo ? "וידאו" : "תמונה";
+        wrap.appendChild(badge);
 
-  fileInput.addEventListener('change', handleFile);
+        const rm = document.createElement("button");
+        rm.type = "button";
+        rm.className = "rm";
+        rm.setAttribute("aria-label", "הסרת קובץ");
+        rm.textContent = "×";
+        rm.addEventListener("click", () => {
+          selectedFiles.splice(index, 1);
+          renderPreviews();
+        });
+        wrap.appendChild(rm);
 
-  uploadArea.addEventListener('dragover', e => {
-    e.preventDefault();
-    uploadArea.classList.add('dragover');
-  });
-  uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
-  uploadArea.addEventListener('drop', e => {
-    e.preventDefault();
-    uploadArea.classList.remove('dragover');
-    if (e.dataTransfer.files.length) {
-      fileInput.files = e.dataTransfer.files;
-      handleFile();
+        previews.appendChild(wrap);
+      });
     }
-  });
 
-  function handleFile() {
-    const file = fileInput.files[0];
-    if (!file) return;
-    selectedFile = file;
-    previewName.textContent = file.name;
-    if (file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = e => {
-        previewImg.src = e.target.result;
-        previewImg.style.display = 'block';
-      };
-      reader.readAsDataURL(file);
-    } else {
-      previewImg.style.display = 'none';
+    /* Convert a File to a base64 string (without the data: prefix). */
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const result = reader.result;
+          const base64 = result.split(",")[1] || "";
+          resolve(base64);
+        };
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(file);
+      });
     }
-    uploadPreview.classList.add('show');
-  }
 
-  removeFile.addEventListener('click', () => {
-    selectedFile = null;
-    fileInput.value = '';
-    previewImg.src = '';
-    previewImg.style.display = 'none';
-    uploadPreview.classList.remove('show');
-  });
+    /* ===================== Form submit ===================== */
+    const form = document.getElementById("wishForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const errorMsg = document.getElementById("errorMsg");
+    const toast = document.getElementById("toast");
+    const toastClose = document.getElementById("toastClose");
 
-  /* ─────────────────────────────────────────────────────────
-     TOAST
-  ─────────────────────────────────────────────────────────── */
-  function showToast(msg, duration = 3500) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), duration);
-  }
+    function showError(msg) {
+      errorMsg.textContent = msg;
+      errorMsg.classList.add("show");
+    }
+    function clearError() {
+      errorMsg.textContent = "";
+      errorMsg.classList.remove("show");
+    }
 
-  /* ─────────────────────────────────────────────────────────
-     FORM SUBMIT
-  ─────────────────────────────────────────────────────────── */
-  document.getElementById('blessingForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
+    function setLoading(loading) {
+      if (loading) {
+        submitBtn.classList.add("is-loading");
+        submitBtn.disabled = true;
+        submitBtn.querySelector(".btn-text").textContent = "שולח...";
+      } else {
+        submitBtn.classList.remove("is-loading");
+        submitBtn.disabled = false;
+        submitBtn.querySelector(".btn-text").textContent = "שליחת הברכה";
+      }
+    }
 
-    const name     = document.getElementById('guestName').value.trim();
-    const blessing = document.getElementById('blessingText').value.trim();
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearError();
 
-    if (!name)     { showToast('נא למלא שם 😊'); return; }
-    if (!blessing) { showToast('נא לכתוב ברכה קצרה ✍️'); return; }
+      const guestName = document.getElementById("guestName").value.trim();
+      const guestWish = document.getElementById("guestWish").value.trim();
 
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.innerHTML = 'שולח… <span class="spinner"></span>';
-
-    try {
-      let mediaUrl  = null;
-      let mediaType = null;
-
-      /* ── Convert file to base64 ── */
-      let fileBase64   = null;
-      let fileMimeType = null;
-      let fileName     = null;
-
-      if (selectedFile) {
-        fileBase64   = await toBase64(selectedFile);
-        fileMimeType = selectedFile.type;
-        fileName     = selectedFile.name;
-        mediaType    = selectedFile.type.startsWith('video/') ? 'video' : 'image';
+      if (!guestName) {
+        showError("נא למלא את שם האורחים");
+        document.getElementById("guestName").focus();
+        return;
       }
 
-      /* ── Payload ── */
-      const payload = {
-        name,
-        blessing,
-        fileBase64,
-        fileMimeType,
-        fileName,
-      };
+      const totalBytes = selectedFiles.reduce((sum, f) => sum + f.size, 0);
+      if (totalBytes > MAX_TOTAL_BYTES) {
+        showError("הקבצים גדולים מדי. נסו להעלות פחות קבצים או בגודל קטן יותר.");
+        return;
+      }
 
-      if (USE_MOCK_DATA) {
-        /* MOCK: simulate network delay + add card locally */
-        await new Promise(r => setTimeout(r, 900));
-        mediaUrl = selectedFile ? URL.createObjectURL(selectedFile) : null;
-      } else {
-        /* REAL: POST to Google Apps Script */
-        const res  = await fetch(APPS_SCRIPT_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+      setLoading(true);
+
+      try {
+        // Convert all files to base64 in parallel.
+        const files = await Promise.all(
+          selectedFiles.map(async (file) => ({
+            name: file.name,
+            type: file.type,
+            data: await fileToBase64(file),
+          }))
+        );
+
+        const payload = {
+          guestName,
+          guestWish,
+          files,
+          timestamp: new Date().toISOString(),
+        };
+
+        // NOTE: text/plain avoids a CORS preflight against Apps Script.
+        const res = await fetch(GOOGLE_SCRIPT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify(payload),
         });
-        if (!res.ok) throw new Error('שגיאת שרת');
-        const data = await res.json();
-        mediaUrl = data.fileUrl || null;
+
+        if (!res.ok) throw new Error("Network response was not ok: " + res.status);
+
+        let result;
+        try {
+          result = await res.json();
+        } catch {
+          result = { status: "success" };
+        }
+
+        if (result.status && result.status !== "success") {
+          throw new Error(result.message || "Server error");
+        }
+
+        // Success — reset and show popup.
+        form.reset();
+        selectedFiles = [];
+        renderPreviews();
+        showToast();
+      } catch (err) {
+        console.error(err);
+        showError("אירעה שגיאה בשליחה. נסו שוב בעוד רגע.");
+      } finally {
+        setLoading(false);
       }
-
-      /* Prepend new card */
-      const newCard = {
-        id:        'u' + Date.now(),
-        name,
-        blessing,
-        mediaUrl,
-        mediaType,
-        timestamp: Date.now(),
-      };
-      allBlessings.unshift(newCard);
-      renderWall(allBlessings);
-
-      /* Reset form */
-      this.reset();
-      selectedFile = null;
-      uploadPreview.classList.remove('show');
-      previewImg.style.display = 'none';
-
-      showToast('הברכה נשלחה בהצלחה! תודה רבה 💛');
-
-      /* Scroll to wall */
-      document.getElementById('wallGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-    } catch (err) {
-      console.error(err);
-      showToast('שגיאה בשליחה, אנא נסו שוב 😔');
-    } finally {
-      btn.disabled = false;
-      btn.innerHTML = 'שלחו ברכה &#8594;';
-    }
-  });
-
-  function toBase64(file) {
-    return new Promise((resolve, reject) => {
-      const r = new FileReader();
-      r.onload  = () => resolve(r.result.split(',')[1]);
-      r.onerror = () => reject(new Error('קריאת קובץ נכשלה'));
-      r.readAsDataURL(file);
     });
-  }
 
-  /* ─────────────────────────────────────────────────────────
-     INIT
-  ─────────────────────────────────────────────────────────── */
-  renderWall(allBlessings);
-</script>
-
-<!--
-═══════════════════════════════════════════════════════════════
-  GOOGLE APPS SCRIPT SETUP GUIDE
-  ──────────────────────────────────────────────────────────────
-  1. CREATE A SPREADSHEET
-     • Go to https://sheets.google.com and create a new spreadsheet.
-     • Name it "נועה ועפרי – ברכות".
-     • Add headers in Row 1: Timestamp | Name | Blessing | File URL | File Type
-
-  2. CREATE A DRIVE FOLDER
-     • Go to https://drive.google.com and create a folder named "Wedding Media".
-     • Copy its folder ID from the URL: drive.google.com/drive/folders/FOLDER_ID
-
-  3. OPEN APPS SCRIPT
-     • In the spreadsheet: Extensions → Apps Script.
-     • Delete any existing code and paste the script below.
-
-  4. APPS SCRIPT CODE:
-  ───────────────────────────────────────────────────────────────
-  const SHEET_ID  = 'YOUR_SPREADSHEET_ID'; // from the sheet URL
-  const FOLDER_ID = 'YOUR_FOLDER_ID';      // from the Drive URL
-
-  function doPost(e) {
-    try {
-      const data     = JSON.parse(e.postData.contents);
-      const sheet    = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
-      const folder   = DriveApp.getFolderById(FOLDER_ID);
-
-      let fileUrl = '';
-
-      // Upload media to Drive if present
-      if (data.fileBase64 && data.fileMimeType && data.fileName) {
-        const decoded = Utilities.base64Decode(data.fileBase64);
-        const blob    = Utilities.newBlob(decoded, data.fileMimeType, data.fileName);
-        const file    = folder.createFile(blob);
-        file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
-        fileUrl = file.getDownloadUrl();
-      }
-
-      // Append row to sheet
-      sheet.appendRow([
-        new Date(),
-        data.name,
-        data.blessing,
-        fileUrl,
-        data.fileMimeType || '',
-      ]);
-
-      return ContentService
-        .createTextOutput(JSON.stringify({ ok: true, fileUrl }))
-        .setMimeType(ContentService.MimeType.JSON);
-
-    } catch (err) {
-      return ContentService
-        .createTextOutput(JSON.stringify({ ok: false, error: err.message }))
-        .setMimeType(ContentService.MimeType.JSON);
+    /* ===================== Toast ===================== */
+    function showToast() {
+      toast.classList.add("show");
     }
-  }
-  ───────────────────────────────────────────────────────────────
-
-  5. DEPLOY
-     • Click Deploy → New Deployment → Web App.
-     • Execute as: Me (your Google account).
-     • Who has access: Anyone.
-     • Click Deploy and copy the Web App URL.
-
-  6. WIRE IT UP
-     • In index.html set: const APPS_SCRIPT_URL = 'YOUR_WEB_APP_URL';
-     • Set: const USE_MOCK_DATA = false;
-
-  7. LOAD EXISTING BLESSINGS (optional)
-     • Add a doGet() function that reads the sheet and returns JSON.
-     • Fetch it on page load to populate the wall from real data.
-═══════════════════════════════════════════════════════════════
--->
+    function hideToast() {
+      toast.classList.remove("show");
+    }
+    toastClose.addEventListener("click", hideToast);
+    toast.addEventListener("click", (e) => {
+      if (e.target === toast) hideToast();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") hideToast();
+    });
+  </script>
 </body>
 </html>
