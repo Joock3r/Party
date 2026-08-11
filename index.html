@@ -1125,11 +1125,22 @@
           throw new Error(result.message || "Server error");
         }
 
+        // Keep a copy of what was submitted for the instant preview.
+        const submittedName = guestName;
+        const submittedWish = guestWish;
+        const submittedFiles = selectedFiles.slice();
+
         // Success — reset and show popup.
         form.reset();
         selectedFiles = [];
         renderPreviews();
         showToast();
+
+        // Show the new wish immediately and jump to the wall.
+        prependLocalWish(submittedName, submittedWish, submittedFiles);
+        document.getElementById("wall").scrollIntoView({ behavior: "smooth" });
+
+        // Sync with the server (replaces the preview with the stored version).
         loadWishes();
       } catch (err) {
         console.error(err);
@@ -1252,12 +1263,18 @@
     }
 
     async function loadWishes() {
-      if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbxA3Y5rdFbvBnDzsjKrasllE9lizL45Aq6m5o8PBdsIsOK2W5k4o2oruvSImGgqIacIbw/exec") {
+      if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL") {
         wallStatus.textContent = "";
         return;
       }
       try {
-        const res = await fetch(GOOGLE_SCRIPT_URL, { method: "GET" });
+        // Cache-buster so the browser never serves a stale list.
+        const url =
+          GOOGLE_SCRIPT_URL +
+          (GOOGLE_SCRIPT_URL.indexOf("?") === -1 ? "?" : "&") +
+          "t=" +
+          Date.now();
+        const res = await fetch(url, { method: "GET" });
         const data = await res.json();
         if (data.status === "success") {
           renderWishes(data.wishes || []);
@@ -1266,8 +1283,68 @@
         }
       } catch (err) {
         console.error(err);
-        wallStatus.textContent = "לא ניתן לטעון את הברכות כרגע.";
+        // Keep any instant-preview cards already on screen.
+        if (!wallGrid.children.length) {
+          wallStatus.textContent = "לא ניתן לטעון את הברכות כרגע.";
+        }
       }
+    }
+
+    /* Builds a card from the just-submitted data using local files, so the
+       guest sees their wish instantly even before the server round-trip. */
+    function prependLocalWish(name, wish, files) {
+      wallStatus.style.display = "none";
+
+      const card = document.createElement("article");
+      card.className = "wish-card";
+
+      const head = document.createElement("div");
+      head.className = "wc-head";
+
+      const avatar = document.createElement("div");
+      avatar.className = "wc-avatar";
+      avatar.textContent = initials(name);
+      head.appendChild(avatar);
+
+      const meta = document.createElement("div");
+      const nameEl = document.createElement("div");
+      nameEl.className = "wc-name";
+      nameEl.textContent = name;
+      const dateEl = document.createElement("div");
+      dateEl.className = "wc-date";
+      dateEl.textContent = formatDate(new Date().toISOString());
+      meta.appendChild(nameEl);
+      meta.appendChild(dateEl);
+      head.appendChild(meta);
+      card.appendChild(head);
+
+      if (wish) {
+        const text = document.createElement("p");
+        text.className = "wc-text";
+        text.textContent = wish;
+        card.appendChild(text);
+      }
+
+      if (files && files.length) {
+        const media = document.createElement("div");
+        media.className = "wc-media" + (files.length === 1 ? " single" : "");
+        files.forEach((f) => {
+          const item = document.createElement("div");
+          item.className = "m-item";
+          const isVideo = (f.type || "").startsWith("video/");
+          const el = document.createElement(isVideo ? "video" : "img");
+          el.src = URL.createObjectURL(f);
+          if (isVideo) {
+            el.controls = true;
+            el.muted = true;
+          }
+          item.appendChild(el);
+          media.appendChild(item);
+        });
+        card.appendChild(media);
+      }
+
+      wallGrid.insertBefore(card, wallGrid.firstChild);
     }
 
     loadWishes();
