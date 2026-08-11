@@ -637,6 +637,105 @@
       margin-top: 24px;
     }
 
+    /* ===================== Wishes Wall ===================== */
+    .wall {
+      background: var(--off-white);
+    }
+
+    .wall-status {
+      color: var(--muted);
+      margin-top: 28px;
+      font-size: 1rem;
+    }
+
+    .wall-grid {
+      margin-top: 40px;
+      column-count: 3;
+      column-gap: 22px;
+    }
+
+    .wish-card {
+      break-inside: avoid;
+      display: inline-block;
+      width: 100%;
+      margin-bottom: 22px;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px 22px 18px;
+      text-align: right;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .wish-card .wc-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .wish-card .wc-avatar {
+      width: 42px;
+      height: 42px;
+      flex: none;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 700;
+      font-family: "Heebo", sans-serif;
+      background: linear-gradient(135deg, var(--gold), var(--rose-gold));
+    }
+    .wish-card .wc-name {
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+    .wish-card .wc-date {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .wish-card .wc-text {
+      color: var(--ink);
+      white-space: pre-wrap;
+      margin-bottom: 12px;
+    }
+
+    .wc-media {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .wc-media.single {
+      grid-template-columns: 1fr;
+    }
+    .wc-media .m-item {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--sand);
+      border: 1px solid var(--line);
+      aspect-ratio: 1;
+    }
+    .wc-media .m-item img,
+    .wc-media .m-item iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      object-fit: cover;
+      display: block;
+    }
+    .wc-media .m-item a.m-open {
+      position: absolute;
+      inset: 0;
+    }
+
+    @media (max-width: 900px) {
+      .wall-grid { column-count: 2; }
+    }
+    @media (max-width: 560px) {
+      .wall-grid { column-count: 1; }
+    }
+
     /* ===================== Footer ===================== */
     footer {
       background: var(--ink);
@@ -779,6 +878,21 @@
           </p>
         </div>
       </form>
+    </div>
+  </section>
+
+  <!-- ===================== WISHES WALL ===================== -->
+  <section class="wall" id="wall">
+    <div class="container center">
+      <div class="reveal">
+        <span class="eyebrow">קיר הברכות</span>
+        <h2 class="section-title">הברכות שלכם</h2>
+        <div class="divider"></div>
+        <p class="section-sub">כל הברכות, התמונות והסרטונים שנשלחו — החדשות ביותר למעלה</p>
+      </div>
+
+      <p class="wall-status" id="wallStatus">טוען ברכות...</p>
+      <div class="wall-grid" id="wallGrid"></div>
     </div>
   </section>
 
@@ -1016,6 +1130,7 @@
         selectedFiles = [];
         renderPreviews();
         showToast();
+        loadWishes();
       } catch (err) {
         console.error(err);
         showError("אירעה שגיאה בשליחה. נסו שוב בעוד רגע.");
@@ -1038,6 +1153,124 @@
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") hideToast();
     });
+
+    /* ===================== Wishes Wall ===================== */
+    const wallGrid = document.getElementById("wallGrid");
+    const wallStatus = document.getElementById("wallStatus");
+
+    function escapeHtml(str) {
+      const div = document.createElement("div");
+      div.textContent = str == null ? "" : String(str);
+      return div.innerHTML;
+    }
+
+    function formatDate(iso) {
+      const d = new Date(iso);
+      if (isNaN(d.getTime())) return "";
+      return d.toLocaleDateString("he-IL", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+    }
+
+    function initials(name) {
+      const parts = String(name || "").trim().split(/\s+/);
+      const first = parts[0] ? parts[0][0] : "";
+      const second = parts[1] ? parts[1][0] : "";
+      return (first + second) || "♥";
+    }
+
+    function mediaMarkup(files) {
+      if (!files || !files.length) return "";
+      const items = files
+        .map((f) => {
+          const id = encodeURIComponent(f.id);
+          const isVideo = (f.type || "").startsWith("video/");
+          if (isVideo) {
+            return (
+              '<div class="m-item">' +
+              '<iframe src="https://drive.google.com/file/d/' +
+              id +
+              '/preview" allow="autoplay" loading="lazy"></iframe>' +
+              "</div>"
+            );
+          }
+          const thumb =
+            "https://drive.google.com/thumbnail?id=" + id + "&sz=w1000";
+          const open = "https://drive.google.com/file/d/" + id + "/view";
+          return (
+            '<div class="m-item">' +
+            '<img src="' +
+            thumb +
+            '" alt="' +
+            escapeHtml(f.name || "תמונה") +
+            '" loading="lazy" />' +
+            '<a class="m-open" href="' +
+            open +
+            '" target="_blank" rel="noopener" aria-label="פתיחת הקובץ"></a>' +
+            "</div>"
+          );
+        })
+        .join("");
+      const single = files.length === 1 ? " single" : "";
+      return '<div class="wc-media' + single + '">' + items + "</div>";
+    }
+
+    function renderWishes(wishes) {
+      if (!wishes || !wishes.length) {
+        wallStatus.textContent = "עדיין אין ברכות — היו הראשונים לברך!";
+        wallGrid.innerHTML = "";
+        return;
+      }
+      wallStatus.style.display = "none";
+      wallGrid.innerHTML = wishes
+        .map((w) => {
+          const name = escapeHtml(w.name);
+          const wishText = w.wish ? escapeHtml(w.wish) : "";
+          return (
+            '<article class="wish-card">' +
+            '<div class="wc-head">' +
+            '<div class="wc-avatar">' +
+            escapeHtml(initials(w.name)) +
+            "</div>" +
+            "<div>" +
+            '<div class="wc-name">' +
+            name +
+            "</div>" +
+            '<div class="wc-date">' +
+            escapeHtml(formatDate(w.timestamp)) +
+            "</div>" +
+            "</div>" +
+            "</div>" +
+            (wishText ? '<p class="wc-text">' + wishText + "</p>" : "") +
+            mediaMarkup(w.files) +
+            "</article>"
+          );
+        })
+        .join("");
+    }
+
+    async function loadWishes() {
+      if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL === "https://script.google.com/macros/s/AKfycbxA3Y5rdFbvBnDzsjKrasllE9lizL45Aq6m5o8PBdsIsOK2W5k4o2oruvSImGgqIacIbw/exec") {
+        wallStatus.textContent = "";
+        return;
+      }
+      try {
+        const res = await fetch(GOOGLE_SCRIPT_URL, { method: "GET" });
+        const data = await res.json();
+        if (data.status === "success") {
+          renderWishes(data.wishes || []);
+        } else {
+          wallStatus.textContent = "לא ניתן לטעון את הברכות כרגע.";
+        }
+      } catch (err) {
+        console.error(err);
+        wallStatus.textContent = "לא ניתן לטעון את הברכות כרגע.";
+      }
+    }
+
+    loadWishes();
   </script>
 </body>
 </html>
